@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig" ddlActionDbType="mysql" migrateIndexesAndConstraints="true" reUseTableSchema="true" newRepositoryParent="org.springframework.data.repository.CrudRepository">
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="renamerInitialized" value="true" />
+    <option name="sourceModelValue" value="Default" />
+    <option name="reverseEngineeringLastDbConnectionId" value="ee552cd7-9245-4d46-b508-67624ec86998__coupons" />
+    <option name="reLastEntityCreationPackage" value="src/main/java/com/oren/coupons/entities" />
+    <option name="newEntityIdType" value="Integer" />
+    <option name="newEntityIdStrategy" value="Auto" />
+  </component>
+</project>

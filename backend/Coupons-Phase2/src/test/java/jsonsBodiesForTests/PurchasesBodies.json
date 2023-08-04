@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "couponId": 5,
+    "userId": 3,
+    "amount": 15,
+    "date": "2023-03-03"
+  },
+  {
+    "id": 2,
+    "couponId": 3,
+    "userId": 5,
+    "amount": 1,
+    "date": "2023-03-05"
+  }
+]

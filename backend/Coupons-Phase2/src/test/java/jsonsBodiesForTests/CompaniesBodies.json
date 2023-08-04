@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "username": "sadsdc@somerandomdomain1.com",
+    "password": "pass1234",
+    "userType": "CUSTOMER",
+    "companyId": null
+  },
+  {
+    "id": 2,
+    "username": "icas@somerandomdomain2.co.il",
+    "password": "pass4321",
+    "userType": "ADMIN",
+    "companyId": null
+  },
+  {
+    "id": 3,
+    "username": "israasdeli@somerandomdomain3.co.il",
+    "password": "pass1111",
+    "userType": "COMPANY",
+    "companyId": 1
+  },
+  {
+    "id": 4,
+    "username": "israelissaaeli@somerandomdomain4.co.il",
+    "password": "pass0123",
+    "userType": "COMPANY",
+    "companyId": 4
+  },
+  {
+    "id": 5,
+    "username": "israelisraeli@somerandomdomain5.co.il",
+    "password": "pass9876",
+    "userType": "CUSTOMER",
+    "companyId": null
+  },
+  {
+    "id": 7,
+    "username": "sheker@gmail.co.il",
+    "password": "pass9875",
+    "userType": "CUSTOMER",
+    "companyId": 1
+  },
+  {
+    "id": 9,
+    "username": "shaker@gmail.co.il",
+    "password": "pass9875",
+    "userType": "CUSTOMER",
+    "companyId": null
+  },
+  {
+    "id": 10,
+    "username": "oren.dro@gmail.com",
+    "password": "admin1234",
+    "userType": "ADMIN",
+    "companyId": null
+  }
+]
+[{
+  "id": 3,
+  "username": "
+}]
