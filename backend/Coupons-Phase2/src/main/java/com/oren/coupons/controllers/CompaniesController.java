@@ -40,7 +40,7 @@ public class CompaniesController {
         return this.companyLogic.getCompany(id);
     }
 
-    //TODO DELETE ()
+
     @DeleteMapping("/{Id}")
     public void deleteCompany(@PathVariable("Id") int CompanyId) throws ApplicationException{
         this.companyLogic.deleteCompany(CompanyId);

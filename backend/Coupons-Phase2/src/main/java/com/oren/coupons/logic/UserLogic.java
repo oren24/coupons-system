@@ -53,16 +53,14 @@ public class UserLogic extends GeneralLogic {
     }
     public String login(String userName, String password) throws ApplicationException {
         String hashedPassword = hashPassword(password);
-        //todo: remove print before production
-        System.out.println("\n\n\t\tpassword: "+password+"---> hashed password: "+hashedPassword+"\n\n");
+
 
         if( !this.usersDal.userLogIn(userName, hashedPassword)){
             throw new ApplicationException(ErrorType.USER_NOT_FOUND,"user name and password does not match or exist");
         };
         try {
             String token = generateToken(userName, hashedPassword);
-            // todo: remove print before production
-            System.out.println("TOKEN = " + token+" for user: "+userName + " password: "+hashedPassword+" decoded token: "+token);
+
             return token;
 
         }catch (Exception e){
