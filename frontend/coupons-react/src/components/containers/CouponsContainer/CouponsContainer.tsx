@@ -1,3 +1,4 @@
+import "./CouponsContainer.css";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {CouponCard} from "../../cards/CouponCard/CouponCard";
