@@ -29,6 +29,8 @@ export function CouponsContainer() {
     //     //useEffect(() => fetchCoupons, []);
     //
     // }
+
+
     const [coupons, setCoupons] = useState<ICoupon[]>([]);
     //const [coupons2, setCoupons2] = useState<ICoupon>(fetchCoupons);
 
