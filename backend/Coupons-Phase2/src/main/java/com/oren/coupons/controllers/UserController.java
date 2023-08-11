@@ -53,6 +53,7 @@ public class UserController {
     public String login(@RequestBody User user) throws ApplicationException {
         //todo: remove print before production
         System.out.println("\n\n\"user: "+ user.getUsername()+" ---> pass: "+user.getPassword()+"\n\n");
+
         String token=userLogic.login(user.getUsername(), user.getPassword());
 
 

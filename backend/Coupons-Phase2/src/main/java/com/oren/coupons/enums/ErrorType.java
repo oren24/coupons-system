@@ -18,7 +18,8 @@ public enum ErrorType {
     NAME_IS_TOO_SHORT(632,"name too short" ,false ),
     NAME_IS_ALREADY_EXISTS(633,"already exists" ,false ),
     USER_ALREADY_EXIST(605,"user already exist" ,false ),
-    UNAUTHORIZED(401,"unauthorized request " ,false );
+    UNAUTHORIZED(401,"unauthorized request " ,false ),
+    USER_NOT_FOUND(606,"user and password match not found",false );
 
 
 
