@@ -12,7 +12,7 @@ public class Purchase {
     private int couponId;
     private int userId;
     private int amount;
-    Date date;
+    private Date date;
     public Purchase() {
 
     }

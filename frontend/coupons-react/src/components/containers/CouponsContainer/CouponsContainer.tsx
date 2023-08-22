@@ -54,7 +54,9 @@ export function CouponsContainer() {
                                               price={coupon.price}
                                               companyId={coupon.companyId}
                                               companyName={coupon.companyName}
-                                              contactEmail={coupon.contactEmail}/> )}
+                                              contactEmail={coupon.contactEmail}/>
+            )
+            }
 
         </div>
     );

@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {CouponsContainer} from "../containers/CouponsContainer/CouponsContainer";
 import {Register} from "../Register/Register";
-
+import {Login} from "../Login/Login";
+import './Layout.css';
 
 function Layout() {
 
@@ -13,7 +14,7 @@ function Layout() {
             </header>
 
             <aside>
-                <Register />
+                <Login />
             </aside>
 
             <main>

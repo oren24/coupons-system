@@ -17,8 +17,10 @@ export function CouponCard(props: ICoupon) {
 
             <h2>{props.name}</h2>
             {/*<p>{props.id}</p><br/>*/}
-            <p>{props.description}</p>
-            <time dateTime={props.startDate.toString()}>{props.endDate.toString()}</time>
+            <label>
+                <p>{props.description}</p>
+            </label>
+                <time dateTime={props.startDate.toString()}>{props.endDate.toString()}</time>
             <br/>
             <time dateTime={props.endDate.toString()}>{props.endDate.toString()}</time>
             {/*{props.categoryId}<br/>*/}

@@ -119,7 +119,7 @@ public class PurchaseExtended extends Purchase{
                 ", username='" + username + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", contactEmail='" + contactEmail + '\'' +
-                ", date=" + date +
+                ", date=" + this.getDate() +
                 "} " + super.toString();
     }
 }

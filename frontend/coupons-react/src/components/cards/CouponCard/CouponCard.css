@@ -1,10 +1,24 @@
+
 .CouponCard {
-    width: 300px;
+    @media screen and (min-width: 600px) {
+        width: 24%;
+        font-size: 12px;
+
+    }
+    @media screen and (min-width: 900px) {
+        width: 24%;
+        font-size: 14px;
+
+    }
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
     border: 1px solid #6000d6;
     box-shadow: 0px 0px 10px 0px rgb(164, 99, 255);
     padding: 10px;
-    margin: 0 auto;
-
+    margin: 5% auto;
+    margin-inline: 5% auto;
+    background-color: rgba(41, 41, 41, 0.02);
 }
 h2 {
     font-size: 18px;
