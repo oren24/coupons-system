@@ -8,7 +8,7 @@ import Layout from './components/layout/Layout';
 
 
 function App() {
-  // let userData = jwt_decode(token);
+
   return (
     <div className="App" >
       <BrowserRouter>
