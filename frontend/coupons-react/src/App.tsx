@@ -1,5 +1,3 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {CouponsContainer} from "./components/containers/CouponsContainer/CouponsContainer";
@@ -9,37 +7,21 @@ import Layout from './components/layout/Layout';
 
 function App() {
 
-  return (
-    <div className="App" >
-      <BrowserRouter>
-        <Routes>
-          <Route path={"/containers/CouponsContainer"} element={"CouponsContainer"} />
-          <Route path={"/CouponCard"} element={"CouponCard"} />
-            <Route path={"/layout"} element={"Layout"} />
-        </Routes>
-      </BrowserRouter>
-        <Layout />
+    return (
+        <div className="App">
+            <BrowserRouter>
+                <Routes>
+                    <Route path={"/containers/CouponsContainer"} element={"CouponsContainer"}/>
+                    <Route path={"/CouponCard"} element={"CouponCard"}/>
+                    <Route path={"/layout"} element={"Layout"}/>
+                </Routes>
+            </BrowserRouter>
+
+            <Layout/>
 
 
-
-
-
-      {/*<header className="App-header">*/}
-      {/*  <img src={logo} className="App-logo" alt="logo" />*/}
-      {/*  <p>*/}
-      {/*    Edit <code>src/App.tsx</code> and save to reload.*/}
-      {/*  </p>*/}
-      {/*  <a*/}
-      {/*    className="App-link"*/}
-      {/*    href="https://reactjs.org"*/}
-      {/*    target="_blank"*/}
-      {/*    rel="noopener noreferrer"*/}
-      {/*  >*/}
-      {/*    Learn React*/}
-      {/*  </a>*/}
-      {/*</header>*/}
-    </div>
-  );
+        </div>
+    );
 }
 
 export default App;

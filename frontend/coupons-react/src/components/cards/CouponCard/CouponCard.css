@@ -20,14 +20,17 @@
     margin-inline: 5% auto;
     background-color: rgba(41, 41, 41, 0.02);
 }
+
 h2 {
     font-size: 18px;
     margin-bottom: 5px;
 }
+
 p {
     font-size: 14px;
     margin-bottom: 5px;
 }
+
 time {
     font-size: 12px;
     margin-bottom: 5px;

@@ -32,7 +32,6 @@ export function Login() {
             let connectedUser: IUser = userData.sub;
 
 
-
         } catch (error: any) {
             alert("Error:  username or password are incorrect");
             console.log(error.message);
@@ -49,7 +48,7 @@ export function Login() {
 
             <h3>Enter your username and password</h3>
 
-            <label >
+            <label>
                 username<br/>
                 <input type="text" placeholder='userName' onChange={event => setUserName(event.target.value)}/>
             </label>

@@ -1,4 +1,4 @@
-import { ActionType } from "./action-type";
+import {ActionType} from "./action-type";
 
 export interface Action {
     type: ActionType;

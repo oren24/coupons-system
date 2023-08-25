@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
 import {CouponsContainer} from "../containers/CouponsContainer/CouponsContainer";
-import {Register} from "../Register/Register";
 import {Login} from "../Login/Login";
 import './Layout.css';
 
@@ -14,12 +12,12 @@ function Layout() {
             </header>
 
             <aside>
-                <Login />
+                <Login/>
             </aside>
 
             <main>
 
-                <CouponsContainer />
+                <CouponsContainer/>
 
             </main>
 

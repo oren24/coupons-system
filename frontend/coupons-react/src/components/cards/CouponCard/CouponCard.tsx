@@ -1,12 +1,11 @@
 import "./CouponCard.css";
-import axios from "axios";
-import React, {useEffect, useState} from "react";
-
+import React from "react";
+import ICoupon from "../../../models/ICoupon";
 
 
 export function CouponCard(props: ICoupon) {
 
-    function dateToString(date:Date){
+    function dateToString(date: Date) {
         return date.toString()
     }
 
@@ -20,7 +19,7 @@ export function CouponCard(props: ICoupon) {
             <label>
                 <p>{props.description}</p>
             </label>
-                <time dateTime={props.startDate.toString()}>{props.endDate.toString()}</time>
+            <time dateTime={props.startDate.toString()}>{props.endDate.toString()}</time>
             <br/>
             <time dateTime={props.endDate.toString()}>{props.endDate.toString()}</time>
             {/*{props.categoryId}<br/>*/}

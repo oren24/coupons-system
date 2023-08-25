@@ -1,35 +1,35 @@
-.layout { 
-  height: 100%;
-  border: 2px solid black;
-  /*todo: choose better color or color scheme*/
-  background-color: rgb(199, 198, 198);
-  text-align: center;
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  /*grid-template-rows: 10% 85% 5%; */
+.layout {
+    height: 100%;
+    border: 2px solid black;
+    /*todo: choose better color or color scheme*/
+    background-color: rgb(199, 198, 198);
+    text-align: center;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    /*grid-template-rows: 10% 85% 5%; */
     grid-template-rows: auto 1fr auto;
 }
 
-.layout> * {
-  border: 2px solid black;
+.layout > * {
+    border: 2px solid black;
 }
 
-.layout>header, footer {
-  grid-column: span 12;
-  grid-row: auto;
-
-}
-
-.layout>aside {
-
-  grid-column: span 2;
-  /*grid-row: span 2;*/
+.layout > header, footer {
+    grid-column: span 12;
+    grid-row: auto;
 
 }
 
-.layout>main {
-  grid-column: span 10;
-  grid-row: auto;
+.layout > aside {
+
+    grid-column: span 2;
+    /*grid-row: span 2;*/
+
+}
+
+.layout > main {
+    grid-column: span 10;
+    grid-row: auto;
 }
 

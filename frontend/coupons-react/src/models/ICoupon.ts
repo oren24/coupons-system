@@ -18,13 +18,14 @@ export default interface ICoupon {
 
 
 }
+
 export async function fetchAllCoupons() {
     try {
         const response = await axios.get("http://localhost:8080/coupons");
-        let data= response.data;
-        let coupons:ICoupon[] = data;
+        let data = response.data;
+        let coupons: ICoupon[] = data;
 
-        store.dispatch({type: ActionType.FETCH_ALL_COUPONS,payload: coupons});// this is the initial call to fetch coupons
+        store.dispatch({type: ActionType.FETCH_ALL_COUPONS, payload: coupons});// this is the initial call to fetch coupons
         return coupons;
 
     } catch (error: any) {

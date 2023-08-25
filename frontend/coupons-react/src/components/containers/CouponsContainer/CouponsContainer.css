@@ -1,11 +1,11 @@
-.CouponsContainer{
+.CouponsContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
     width: 80%;
 
-    margin:  5% auto;
+    margin: 5% auto;
 
     padding: 0 1rem;
     background-color: rgba(0, 0, 0, 0.04);
