@@ -1,3 +1,4 @@
+import "./Register.css"
 import {useState} from "react";
 import axios from "axios";
 
@@ -129,7 +130,7 @@ export function Register() {
             {/*<button onClick={onSubmit}> sign UP!!</button>*/}
             <br/>
 
-            <button>go back</button>
+
 
 
         </div>

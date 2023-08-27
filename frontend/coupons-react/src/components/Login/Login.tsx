@@ -1,4 +1,6 @@
+import "./Login.css"
 import {useState} from "react";
+import Modal from "react-modal";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import IUser from "../../models/IUser";
@@ -66,10 +68,7 @@ export function Login() {
             </label>
             <br/>
 
-            <label>
 
-                <button id='register' onClick={onLoginClicked}>dont have a user? Register!</button>
-            </label>
             <br/>
 
         </div>

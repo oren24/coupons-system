@@ -1,4 +1,5 @@
 export enum ActionType {
-    FETCH_ALL_COUPONS
+    FETCH_ALL_COUPONS,
+
 
 }
