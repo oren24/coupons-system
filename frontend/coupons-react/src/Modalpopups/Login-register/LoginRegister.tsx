@@ -1,3 +1,4 @@
+import './login-register.css';
 import Modal from "react-modal";
 import {Login} from "../../components/Login/Login";
 import {useEffect, useState} from "react";
@@ -13,17 +14,7 @@ const customRegisterStyles = {
         transform: 'translate(-50%, -50%)',
     },
 };
-const customLoginStyles = {
-    content: {
-        top: '50% ',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        marginTop: '-15%',
-        transform: 'translate(-50%, -50%)',
-    },
-};
+
 export function LoginRegister() {
     //function to decode the username from the token
     const decodeToken = (token: string) => {
@@ -70,11 +61,12 @@ export function LoginRegister() {
             <Modal
                 isOpen={isLoginModalVisible}
                 onRequestClose={handleLoginModal}
-                style={customLoginStyles}>
+                style={customRegisterStyles}>
 
                 <Login/>
-
+                <br/>
                 <button id='register' onClick={handleRegisterModal}>dont have a user? Register!</button>
+                <br/>
                 <button onClick={handleLoginModal}>Close</button>
 
             </Modal>
@@ -87,8 +79,10 @@ export function LoginRegister() {
                 style={customRegisterStyles}>
 
                 <Register/>
-
+                <br/>
                 <button id='login' onClick={handleLoginModal}>already registered? Login!</button>
+
+                <br/>
                 <button onClick={handleRegisterModal}>Close</button>
             </Modal>
 

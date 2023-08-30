@@ -8,7 +8,8 @@ export function CategoryCard(props: ICategory) {
 
     return (
         <div className={"CategoryCard"}>
-            {props.name}
+            <button key={props.name} >{props.name}</button>
+
         </div>
     );
 }

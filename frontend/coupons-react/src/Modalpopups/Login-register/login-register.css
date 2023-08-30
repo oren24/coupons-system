@@ -1,0 +1,55 @@
+.login-register{
+    & h2 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+& p {
+    font-size: 1rem;
+    text-align: center;
+}
+
+& input {
+    width: 200px;
+    height: 40px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+& button {
+    width: 100px;
+    height: 40px;
+    background-color: #555;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+}:only-child {
+     & h2 {
+         font-size: 2rem;
+         text-align: center;
+     }
+
+     & p {
+         font-size: 1rem;
+         text-align: center;
+     }
+
+     & input {
+         width: 200px;
+         height: 40px;
+         border: 1px solid #ccc;
+         padding: 10px;
+     }
+
+     & button {
+         width: 100px;
+         height: 5% auto;
+         background-color: #555;
+         color: white;
+         font-size: 1rem;
+         cursor: pointer;
+         margin: auto;
+     }
+ }
+

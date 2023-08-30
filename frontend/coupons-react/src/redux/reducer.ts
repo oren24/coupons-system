@@ -18,6 +18,8 @@ export function reduce(oldAppState: AppState = appStateInitialValue, action: Act
             newAppState.coupons = action.payload;
             break;
 
+        case ActionType.FILTER_COUPONS_BY_CATEGORY:
+            newAppState.coupons = newAppState.coupons.filter(coupon => coupon.categoryId === action.payload);
     }
 
     // After returning the new state, it's being published to all subscribers

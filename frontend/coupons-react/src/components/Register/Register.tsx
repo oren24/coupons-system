@@ -68,8 +68,8 @@ export function Register() {
 
     }
 
-    const onSubmit = async (e: Event) => {
-        e.preventDefault();
+    const onSubmit = async () => {
+
 
         try {
             // Validate the email address structure.
@@ -126,9 +126,10 @@ export function Register() {
                 <input type="number" placeholder='company id' onChange={event => setCompanyId(event.target.value)}/>
             </label>
             <br/>
-
-            {/*<button onClick={onSubmit}> sign UP!!</button>*/}
-            <br/>
+            <label>
+                <button onClick={onSubmit}> sign UP!!</button>
+            </label>
+                <br/>
 
 
 

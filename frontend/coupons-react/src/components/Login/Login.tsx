@@ -8,6 +8,7 @@ import IUser from "../../models/IUser";
 export function Login() {
     let [username, setUserName] = useState('');
     let [password, setPassword] = useState('');
+    let [isLoginFailed, setIsLoginFailed] = useState(false);
 
 
     const onLoginClicked = async () => {
@@ -26,17 +27,26 @@ export function Login() {
             // if the token is valid, save the token in the axios defaults
 
 
-            let token = 'Bearer ' + serverResponse;
-            axios.defaults.headers.common['Authorization'] = token;
-            localStorage.setItem('token', token);
+            if (serverResponse.success) {
+                let token = 'Bearer ' + serverResponse.data;
+                axios.defaults.headers.common['Authorization'] = token;
+                localStorage.setItem('token', token);
 
-            let userData: any = jwt_decode(token);
-            let connectedUser: IUser = userData.sub;
+                let userData: any = jwt_decode(token);
+                let connectedUser: IUser = userData.sub;
 
+                // redirect to the products page
+            } else {
+                // show an error message
+                setIsLoginFailed(true);
+            }
 
         } catch (error: any) {
+            // create an error message and a red border for the input fields if the login failed
+
             alert("Error:  username or password are incorrect");
             console.log(error.message);
+            setIsLoginFailed(true);
 
         }
     }
@@ -50,15 +60,15 @@ export function Login() {
 
             <h3>Enter your username and password</h3>
 
-            <label>
+            <label >
                 username<br/>
-                <input type="text" placeholder='userName' onChange={event => setUserName(event.target.value)}/>
+                <input type="email" placeholder='userName' onChange={event => setUserName(event.target.value)} style={isLoginFailed ? {border: '1px solid red'} : {}}/>
             </label>
             <br/>
 
             <label>
                 password<br/>
-                <input type="password" placeholder='password' onChange={event => setPassword(event.target.value)}/>
+                <input type="password" placeholder='password' onChange={event => setPassword(event.target.value)} style={isLoginFailed ? {border: '1px solid red'} : {}}/>
             </label>
             <br/>
 
