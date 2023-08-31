@@ -3,7 +3,6 @@ package com.oren.coupons.entities;
 import com.oren.coupons.dto.Category;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -13,11 +12,19 @@ public class CategoryEntity {
 	@GeneratedValue
 	@Column(name = "id", nullable = false)
 	private Integer id;
-	@Column(name = "name",unique = true, nullable = false)
+	@Column(name = "name", unique = true, nullable = false)
 	private String name;
 
 	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "category")
 	private List<CouponEntity> couponsList;
+
+	public CategoryEntity() {
+	}
+
+	public CategoryEntity(Category category) {
+		this.id = category.getId();
+		this.name = category.getCategoryName();
+	}
 
 	public List<CouponEntity> getCouponsList() {
 		return couponsList;
@@ -27,12 +34,6 @@ public class CategoryEntity {
 		this.couponsList = couponsList;
 	}
 
-	public CategoryEntity() {
-	}
-	public CategoryEntity(Category category) {
-		this.id = category.getId();
-		this.name = category.getCategoryName();
-	}
 	public String getName() {
 		return name;
 	}

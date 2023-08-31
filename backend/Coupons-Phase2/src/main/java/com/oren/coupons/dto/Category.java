@@ -3,13 +3,12 @@ package com.oren.coupons.dto;
 import com.oren.coupons.entities.CategoryEntity;
 
 
-public class Category{
+public class Category {
 	private Integer id;
+	private String categoryName;
 
 	public Category() {
 	}
-
-	private String categoryName;
 
 
 	public Category(CategoryEntity category) {
@@ -26,13 +25,12 @@ public class Category{
 		this.categoryName = categoryName;
 	}
 
+	public int getId() {
+		return id;
+	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public void setId(int id) {

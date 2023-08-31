@@ -13,37 +13,37 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 // The class is annotated with @ResponseBody, which means that the returned object is the response, not a view name.
 @RestControllerAdvice
 public class ExceptionsHandler {
-    //	Response - Object in Spring
-    // Variable name is throwable in order to remember that it handles Exception and Error
-    // in order to
-    @ExceptionHandler
-    @ResponseBody
-    public ErrorBean toResponse(Throwable throwable) {
+	//	Response - Object in Spring
+	// Variable name is throwable in order to remember that it handles Exception and Error
+	// in order to
+	@ExceptionHandler
+	@ResponseBody
+	public ErrorBean toResponse(Throwable throwable) {
 
-        if(throwable instanceof ApplicationException) {
-            ApplicationException appException = (ApplicationException) throwable;
+		if (throwable instanceof ApplicationException) {
+			ApplicationException appException = (ApplicationException) throwable;
 
-            if(appException.getErrorType().isShowStackTrace()) {
-                appException.printStackTrace();
-            }
+			if (appException.getErrorType().isShowStackTrace()) {
+				appException.printStackTrace();
+			}
 
-            ErrorType errorType = appException.getErrorType();
-            int errorNumber = errorType.getErrorNumber();
-            String errorMessage = errorType.getErrorMessage();
-            ErrorBean errorBean = new ErrorBean(errorNumber, errorMessage);
+			ErrorType errorType = appException.getErrorType();
+			int errorNumber = errorType.getErrorNumber();
+			String errorMessage = errorType.getErrorMessage();
+			ErrorBean errorBean = new ErrorBean(errorNumber, errorMessage);
 
-            return errorBean;
-        }
+			return errorBean;
+		}
 
-        throwable.printStackTrace();
+		throwable.printStackTrace();
 
-        String errorMessage = throwable.getMessage();
-        System.out.println(errorMessage);
+		String errorMessage = throwable.getMessage();
+		System.out.println(errorMessage);
 
-        ErrorBean errorBean = new ErrorBean(606, errorMessage);
+		ErrorBean errorBean = new ErrorBean(606, errorMessage);
 
-        return errorBean;
-    }
+		return errorBean;
+	}
 
 }
 

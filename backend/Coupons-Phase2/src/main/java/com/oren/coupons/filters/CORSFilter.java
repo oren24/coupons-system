@@ -6,72 +6,73 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 /**
- *  This class is a filter that allows CORS requests.
- *  CORS is a security measure that prevents malicious websites from sending requests to your server.
- *
- * */
+ * This class is a filter that allows CORS requests.
+ * CORS is a security measure that prevents malicious websites from sending requests to your server.
+ */
 @Component
 public class CORSFilter implements Filter {
 
 
-    /**
-     * Default constructor.
-     *
-     * /
-    public CORSFilter() {
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * Default constructor.
+	 * <p>
+	 * /
+	 * public CORSFilter() {
+	 * // TODO Auto-generated constructor stub
+	 * }
+	 * <p>
+	 * /**
+	 *
+	 * @see Filter#destroy()
+	 */
+	public void destroy() {
 
-    /**
-     * @see Filter#destroy()
-     */
-    public void destroy() {
-
-        // TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 
-    }
+	}
 
-    /**
-     * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-     */
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
-            throws IOException, ServletException {
+	/**
+	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+	 */
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
+			throws IOException, ServletException {
 
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
+		HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-        //Authorize (allow) all domains to consume the content (json) exposed by this server
-        ((HttpServletResponse) servletResponse).addHeader(
-                "Access-Control-Allow-Credentials",
-                "true");
-        ((HttpServletResponse) servletResponse).addHeader(
-                "Access-Control-Allow-Origin",
-                "http://localhost:3000");
-        ((HttpServletResponse) servletResponse).addHeader(
-                "Access-Control-Allow-Methods",
-                "GET, OPTIONS, HEAD, PUT, POST, DELETE");
-        ((HttpServletResponse) servletResponse).addHeader(
-                "Access-Control-Allow-Headers",
-                "Origin, Accept, x-auth-token, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization");
+		//Authorize (allow) all domains to consume the content (json) exposed by this server
+		((HttpServletResponse) servletResponse).addHeader(
+				"Access-Control-Allow-Credentials",
+				"true");
+		((HttpServletResponse) servletResponse).addHeader(
+				"Access-Control-Allow-Origin",
+				"http://localhost:3000");
+		((HttpServletResponse) servletResponse).addHeader(
+				"Access-Control-Allow-Methods",
+				"GET, OPTIONS, HEAD, PUT, POST, DELETE");
+		((HttpServletResponse) servletResponse).addHeader(
+				"Access-Control-Allow-Headers",
+				"Origin, Accept, x-auth-token, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization");
 
-                HttpServletResponse resp = (HttpServletResponse) servletResponse;
+		HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        // For HTTP OPTIONS verb/method reply with ACCEPTED status code -- per CORS handshake
-        if (request.getMethod().equals("OPTIONS")) {
-            resp.setStatus(HttpServletResponse.SC_ACCEPTED);
-            return;
-        }
+		// For HTTP OPTIONS verb/method reply with ACCEPTED status code -- per CORS handshake
+		if (request.getMethod().equals("OPTIONS")) {
+			resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+			return;
+		}
 
-        // pass the request along the filter chain
-        chain.doFilter(request, servletResponse);
-    }
+		// pass the request along the filter chain
+		chain.doFilter(request, servletResponse);
+	}
 
-    /**
-     * @see Filter#init(FilterConfig)
-     */
-    public void init(FilterConfig fConfig) throws ServletException {
-        // TODO Auto-generated method stub
-    }
+	/**
+	 * @see Filter#init(FilterConfig)
+	 */
+	public void init(FilterConfig fConfig) throws ServletException {
+		// TODO Auto-generated method stub
+	}
 
 }

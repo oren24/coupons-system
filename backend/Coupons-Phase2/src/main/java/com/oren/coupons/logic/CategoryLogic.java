@@ -1,5 +1,6 @@
 package com.oren.coupons.logic;
 
+import com.oren.coupons.dal.ICategoryDal;
 import com.oren.coupons.dto.Category;
 import com.oren.coupons.entities.CategoryEntity;
 import com.oren.coupons.enums.ErrorType;
@@ -7,11 +8,12 @@ import com.oren.coupons.exceptions.ApplicationException;
 import com.oren.coupons.utils.StatisticsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.oren.coupons.dal.ICategoryDal;
+
 import java.util.List;
+
 @Service
 public class CategoryLogic {
-	private ICategoryDal categoriesDal;
+	private final ICategoryDal categoriesDal;
 
 	@Autowired
 	public CategoryLogic(ICategoryDal categoriesDal) {
@@ -26,7 +28,7 @@ public class CategoryLogic {
 	}
 
 	public Category getCategory(int categoryId) throws ApplicationException {
-		Category category= categoriesDal.getById(categoryId);
+		Category category = categoriesDal.getById(categoryId);
 
 		StatisticsUtils.sendStatistics("Category read, category: " + categoryId);
 		return category;

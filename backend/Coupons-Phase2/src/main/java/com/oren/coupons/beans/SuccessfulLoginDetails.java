@@ -20,7 +20,8 @@ public class SuccessfulLoginDetails {
 
 	public SuccessfulLoginDetails() {
 	}
-	public SuccessfulLoginDetails(User user){
+
+	public SuccessfulLoginDetails(User user) {
 		this.id = user.getId();
 		this.userName = user.getUsername();
 		this.userType = user.getUserType();

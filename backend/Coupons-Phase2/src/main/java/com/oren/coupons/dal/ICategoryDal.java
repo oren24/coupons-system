@@ -13,28 +13,27 @@ import java.util.List;
 public interface ICategoryDal extends CrudRepository<CategoryEntity, Integer> {
 
 	@Query("select c from CategoryEntity c where c.id = :id")
-	public Category getById(@Param("id") Integer id);
+	Category getById(@Param("id") Integer id);
 
 	@Query("select c from CategoryEntity c")
 	List<Category> getAll();
 
 	@Query("select c from CategoryEntity c where c.name like :categoryName")
-	public Category getByName(@Param("categoryName") String categoryName);
+	Category getByName(@Param("categoryName") String categoryName);
 
 	@Query("select (count(c) > 0) from CategoryEntity c where c.id = :id")
-	public boolean existById(@Param("id") Integer id);
+	boolean existById(@Param("id") Integer id);
 
 	@Query("select (count(c) > 0) from CategoryEntity c where c.name like :categoryName")
 	boolean existByName(@Param("categoryName") String categoryName);
 
 
-
-
-/**
- *  This method updates the category name by the given id.
- *  @param categoryName - the new category name.
- *  @param id - the id of the category to update.
- * */
+	/**
+	 * This method updates the category name by the given id.
+	 *
+	 * @param categoryName - the new category name.
+	 * @param id           - the id of the category to update.
+	 */
 	@Transactional
 	@Modifying
 	@Query("update CategoryEntity c set c.name = :categoryName where c.id = :id")
