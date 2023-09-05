@@ -1,3 +1,7 @@
+import axios from "axios";
+import {store} from "../redux/store";
+import {ActionType} from "../redux/action-type";
+
 export default interface ICompany {
 
     id: number,
@@ -9,7 +13,9 @@ export default interface ICompany {
 }
 
 export async function fetchAllCompanies() {
-    const response = await fetch("http://localhost:8080/companies");
-    const data = await response.json();
+    const response = await axios.get("http://localhost:8080/companies");
+    let data = response.data;
+    let companies: ICompany[] = data;
+    store.dispatch({type: ActionType.FETCH_ALL_COMPANIES, payload: companies});
     return data;
 }

@@ -18,9 +18,22 @@ export function reduce(oldAppState: AppState = appStateInitialValue, action: Act
             newAppState.coupons = action.payload;
             break;
 
+        case ActionType.FETCH_ALL_CATEGORIES:
+            newAppState.categories = action.payload;
+            break;
+
+        case ActionType.FETCH_ALL_COMPANIES:
+            newAppState.companies = action.payload;
+            break;
+
+
         case ActionType.FILTER_COUPONS_BY_CATEGORY:
             newAppState.coupons = newAppState.coupons.filter(coupon => coupon.categoryId === action.payload);
+            break;
+
+
     }
+
 
     // After returning the new state, it's being published to all subscribers
     // Each component will render itself based on the new state

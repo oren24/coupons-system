@@ -1,8 +1,10 @@
 import axios from "axios";
+import {ActionType} from "../redux/action-type";
+import {store} from "../redux/store";
 
 export default interface ICategory {
     id: number;
-    name: string;
+    categoryName: string;
 }
 
 export async function fetchAllCategories() {
@@ -10,7 +12,7 @@ export async function fetchAllCategories() {
         const response = await axios.get("http://localhost:8080/categories");
         let data = response.data;
         let categories: ICategory[] = data;
-
+        store.dispatch({ type: ActionType.FETCH_ALL_CATEGORIES, payload: categories });// this is the initial call to fetch coupons
         return categories;
 
     } catch (error: any) {
