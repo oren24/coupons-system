@@ -10,8 +10,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		// Start the expired coupons timer task.
-		ExpiredCouponsTimerTask expiredCouponsTimerTask = new ExpiredCouponsTimerTask();
-		expiredCouponsTimerTask.startOnDifferentThread();
+		//ExpiredCouponsTimerTask expiredCouponsTimerTask = new ExpiredCouponsTimerTask();
+		//expiredCouponsTimerTask.startOnDifferentThread();
 
 		// Start the Spring Boot application.
 		SpringApplication.run(Main.class, args);

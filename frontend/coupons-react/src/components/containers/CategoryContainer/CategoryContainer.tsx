@@ -9,6 +9,7 @@ import {store} from "../../../redux/store";
 import {ActionType} from "../../../redux/action-type";
 
 export function CategoryContainer() {
+    const dispatch = useDispatch();
 
     useEffect(() => {
         fetchAllCategories();
@@ -19,7 +20,7 @@ export function CategoryContainer() {
 // sets a filter function to view only the coupons from the selected categories that are not null
 
     function onCategoryClicked(id: number) {
-        // useDispatch({type: ActionType.FILTER_COUPONS_BY_CATEGORY, payload: id})
+        dispatch({type: ActionType.FILTER_COUPONS_BY_CATEGORY, payload: id})
         }
     return (
         <div className={"CategoryCard"}>
