@@ -18,6 +18,7 @@ public class LoginFilter implements Filter {
 	 * @return true if the request is white listed, false if not
 	 */
 	private boolean isRequestWhiteListed(String methodType, String url) {
+
 		if (methodType.equals("POST") && url.endsWith("users/login")) {
 			return true;
 		}

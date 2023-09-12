@@ -18,14 +18,14 @@
     "username": "israasdeli@somerandomdomain3.co.il",
     "password": "pass1111",
     "userType": "COMPANY",
-    "companyId": 1
+    "companyId": null
   },
   {
     "id": 4,
     "username": "israelissaaeli@somerandomdomain4.co.il",
     "password": "pass0123",
     "userType": "COMPANY",
-    "companyId": 4
+    "companyId": null
   },
   {
     "id": 5,
@@ -39,7 +39,7 @@
     "username": "sheker@gmail.co.il",
     "password": "pass9875",
     "userType": "CUSTOMER",
-    "companyId": 1
+    "companyId": null
   },
   {
     "id": 9,
