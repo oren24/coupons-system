@@ -235,3 +235,5 @@ B
 src/redux/store.ts,6\6\6687bbd9e0c8541a6b7e657278fc7e91e52f9a25
 =
 src/index.tsx,5\a\5ab44fe33ca96299f51ad4778a73e425b92bf439
+@
+src/App.test.tsx,1\f\1fc1c06a0502bf303f8ba35e530938a98e7e35b2
