@@ -12,10 +12,10 @@ export default interface ICompany {
 
 }
 
-export async function fetchAllCompanies() {
-    const response = await axios.get("http://localhost:8080/companies");
-    let data = response.data;
-    let companies: ICompany[] = data;
-    store.dispatch({type: ActionType.FETCH_ALL_COMPANIES, payload: companies});
-    return data;
-}
+// export async function fetchAllCompanies() {
+//     const response = await axios.get("http://localhost:8080/companies");
+//     let data = response.data;
+//     let companies: ICompany[] = data;
+//     store.dispatch({type: ActionType.FETCH_ALL_COMPANIES, payload: companies});
+//     return data;
+// }

@@ -1,12 +1,26 @@
 import "./CategoryContainer.css";
 import {useEffect} from "react";
-import {fetchAllCoupons} from "../../../models/ICoupon";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../../redux/app-state";
-import {fetchAllCategories} from "../../../models/ICategory";
-import {CategoryCard} from "../../cards/CategoryCard/CategoryCard";
+
 import {store} from "../../../redux/store";
 import {ActionType} from "../../../redux/action-type";
+import axios from "axios";
+import ICategory from "../../../models/ICategory";
+
+// fetches all categories from the server
+export async function fetchAllCategories() {
+    try {
+        const response = await axios.get("http://localhost:8080/categories");
+        let data = response.data;
+        let categories: ICategory[] = data;
+        store.dispatch({ type: ActionType.FETCH_ALL_CATEGORIES, payload: categories });// this is the initial call to fetch coupons
+        return categories;
+
+    } catch (error: any) {
+        console.log(error.message);
+    }
+}
 
 export function CategoryContainer() {
     const dispatch = useDispatch();

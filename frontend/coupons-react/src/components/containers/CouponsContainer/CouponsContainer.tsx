@@ -3,9 +3,25 @@ import {useEffect} from "react";
 import {CouponCard} from "../../cards/CouponCard/CouponCard";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../../redux/app-state";
-import {fetchAllCoupons} from "../../../models/ICoupon";
 
+import axios from "axios";
+import {store} from "../../../redux/store";
+import {ActionType} from "../../../redux/action-type";
+import ICoupon from "../../../models/ICoupon";
 
+export async function fetchAllCoupons() {
+    try {
+        const response = await axios.get("http://localhost:8080/coupons");
+        let data = response.data;
+        let coupons: ICoupon[] = data;
+
+        store.dispatch({type: ActionType.FETCH_ALL_COUPONS, payload: coupons});// this is the initial call to fetch coupons
+        return coupons;
+
+    } catch (error: any) {
+        console.log(error.message);
+    }
+}
 export function CouponsContainer() {
     let dispatch = useDispatch();
 
