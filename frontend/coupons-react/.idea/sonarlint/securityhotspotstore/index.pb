@@ -237,3 +237,11 @@ B
 src/index.tsx,5\a\5ab44fe33ca96299f51ad4778a73e425b92bf439
 @
 src/App.test.tsx,1\f\1fc1c06a0502bf303f8ba35e530938a98e7e35b2
+C
+src/models/IUser.ts,e\7\e7a172e5da0ad95002c9496a29cc54f4c942fa98
+o
+?src/components/containers/FilterContainer/CategoryContainer.css,4\0\405a8a7ff947574dbc252e722f843bfc2c26128a
+m
+=src/components/containers/FilterContainer/FilterContainer.css,5\2\5224c7b8503602288c99233313e8f9822b5e5e20
+m
+=src/components/containers/FilterContainer/FilterContainer.tsx,2\5\2512726e79e239bb3c108037bac62772e059d80c

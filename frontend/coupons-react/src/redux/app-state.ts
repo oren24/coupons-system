@@ -4,6 +4,7 @@ import ICompany from "../models/ICompany";
 
 export class AppState {
     // using axios to get data from the server
+    public allCoupons: ICoupon[] = [];
     public coupons: ICoupon[] = [];
     public categories: ICategory[] = [];
     public companies: ICompany[] = [];

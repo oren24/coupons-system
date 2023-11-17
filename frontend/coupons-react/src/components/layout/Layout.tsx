@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import {Login} from "../Login/Login";
 import {LoginRegister} from "../../Modalpopups/Login-register/LoginRegister";
 import {CategoryContainer} from "../containers/CategoryContainer/CategoryContainer";
+import {FilterContainer} from "../containers/FilterContainer/FilterContainer";
 
 function Layout() {
 
@@ -17,7 +18,8 @@ function Layout() {
             </header>
 
             <aside>
-                <CategoryContainer/>
+                {/*<CategoryContainer/>*/}
+                <FilterContainer/>
             </aside>
 
             <main>

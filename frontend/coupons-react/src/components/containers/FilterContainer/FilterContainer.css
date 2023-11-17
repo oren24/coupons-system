@@ -1,0 +1,18 @@
+.FilterContainer {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  & button {
+    width: 100px;
+    height: 40px;
+    background-color: #555;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+}

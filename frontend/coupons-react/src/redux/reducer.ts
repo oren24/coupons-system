@@ -14,7 +14,7 @@ export function reduce(oldAppState: AppState = appStateInitialValue, action: Act
 
     switch (action.type) {
         case ActionType.FETCH_ALL_COUPONS:
-
+            newAppState.allCoupons = action.payload;
             newAppState.coupons = action.payload;
             break;
 
