@@ -1,4 +1,4 @@
 
 Dtypescript:S1874"'createStore' is deprecated.(æü¶óüÿÿÿÿ8æõäĞ½1
-×typescript:S1874"®The signature '(reducer: Reducer<AppState, Action>, preloadedState?: { coupons: { id: number; name: string; description: string; startDate: { toString: {}; toDateString: {}; toTimeString: {}; ... 40 more ...; [Symbol.toPrimitive]: {}; }; ... 7 more ...; contactEmail: string; }[]; categories: { ...; }[]; companies: { ...; }[]; } | undefined, enhancer?: StoreEnhancer<...> | undefined): Store<...>' of 'createStore' is deprecated.(€ÕûÌşÿÿÿÿ8ÕöäĞ½1
+ïtypescript:S1874"ÆThe signature '(reducer: Reducer<AppState, Action>, preloadedState?: { allCoupons: { id: number; name: string; description: string; startDate: { toString: {}; toDateString: {}; toTimeString: {}; ... 40 more ...; [Symbol.toPrimitive]: {}; }; ... 7 more ...; contactEmail: string; }[]; coupons: { ...; }[]; categories: { ...; }[]; companies: { ...; }[]; } | undefined, enhancer?: StoreEnhancer<...> | undefined): Store<...>' of 'createStore' is deprecated.(€ÕûÌşÿÿÿÿ8ÕöäĞ½1
 Atypescript:S125"Remove this commented out code.(µ’˜8ÕöäĞ½1

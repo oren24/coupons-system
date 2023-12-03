@@ -31,7 +31,16 @@ export function reduce(oldAppState: AppState = appStateInitialValue, action: Act
             newAppState.coupons = newAppState.coupons.filter(coupon => coupon.categoryId === action.payload);
             break;
 
+        case ActionType.FILTER_COUPONS_BY_COMPANY:
+            newAppState.coupons = newAppState.coupons.filter(coupon => coupon.companyId === action.payload);
+            break;
 
+        case ActionType.FILTER_COUPONS_BY_PRICE_RANGE:
+            newAppState.coupons = newAppState.coupons.filter(coupon => coupon.price >= action.payload[0] && coupon.price <= action.payload[1]);
+            break;
+        case ActionType.FILTER_COUPONS_BY_DATE_RANGE:
+            newAppState.coupons = newAppState.coupons.filter(coupon => coupon.startDate >= action.payload[0] && coupon.endDate <= action.payload[1]);
+            break;
     }
 
 

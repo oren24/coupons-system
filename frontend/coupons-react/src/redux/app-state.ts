@@ -8,4 +8,6 @@ export class AppState {
     public coupons: ICoupon[] = [];
     public categories: ICategory[] = [];
     public companies: ICompany[] = [];
+    public priceRange: number[] = [0, 1000];
+    public dateRange: Date[] = [new Date(), new Date()];
 }
