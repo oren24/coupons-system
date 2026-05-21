@@ -2,53 +2,75 @@ package com.oren.coupons.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oren.coupons.beans.SuccessfulLoginDetails;
+import com.oren.coupons.consts.Consts;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
+import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Date;
 
 public class JWTUtils {
 
-	public static SuccessfulLoginDetails decodeJWTClaims(String jwt) throws Exception {
-		return decodeJWT(jwt);
-	}
+    public static Claims decodeJWTClaims(String jwt) throws Exception {
+        String tokenWithoutBearer = getTokenWithoutBearer(jwt);
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(tokenWithoutBearer)
+                .getBody();
 
-	public static SuccessfulLoginDetails decodeJWT(String jwt) throws Exception {
-		String tokenWithoutBearer = getTokenWithoutBearer(jwt);
-		String jsonLoginDetails = new String(Base64.getUrlDecoder().decode(tokenWithoutBearer), StandardCharsets.UTF_8);
-		ObjectMapper objectMapper = new ObjectMapper();
-		return objectMapper.readValue(jsonLoginDetails, SuccessfulLoginDetails.class);
-	}
+        Date expirationDate = claims.getExpiration();
+        if (expirationDate != null && expirationDate.before(new Date())) {
+            throw new Exception("Token has expired");
+        }
 
-	public static String createJWT(SuccessfulLoginDetails successfulLoginDetails) throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
-		String jsonLoginDetails = objectMapper.writeValueAsString(successfulLoginDetails);
-		return Base64.getUrlEncoder().withoutPadding().encodeToString(jsonLoginDetails.getBytes(StandardCharsets.UTF_8));
-	}
+        return claims;
+    }
 
-	public static String createJWT(String subject) {
-		return Base64.getUrlEncoder().withoutPadding().encodeToString(subject.getBytes(StandardCharsets.UTF_8));
-	}
+    public static SuccessfulLoginDetails decodeJWT(String jwt) throws Exception {
+        Claims claims = decodeJWTClaims(jwt);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(claims.getSubject(), SuccessfulLoginDetails.class);
+    }
 
-	public static void validateToken(String token) throws Exception {
-		String tokenWithoutBearer = getTokenWithoutBearer(token);
-		if (tokenWithoutBearer.isEmpty()) {
-			throw new IllegalArgumentException("Token cannot be empty");
-		}
-		decodeJWT(tokenWithoutBearer);
-	}
+    public static String createJWT(SuccessfulLoginDetails successfulLoginDetails) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonLoginDetails = objectMapper.writeValueAsString(successfulLoginDetails);
+        long nowMillis = System.currentTimeMillis();
+        Date now = new Date(nowMillis);
 
-	private static String getTokenWithoutBearer(String token) {
-		if (token == null || token.isEmpty()) {
-			throw new IllegalArgumentException("Token cannot be null or empty");
-		}
-		
-		if (token.startsWith("Bearer ")) {
-			String[] textSegments = token.split(" ");
-			if (textSegments.length < 2) {
-				throw new IllegalArgumentException("Malformed Bearer token");
-			}
-			return textSegments[1];
-		}
-		return token;
-	}
+        return Jwts.builder()
+                .setSubject(jsonLoginDetails)
+                .setIssuedAt(now)
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public static void validateToken(String token) throws Exception {
+        decodeJWTClaims(token);
+    }
+
+    private static SecretKey getSigningKey() {
+        byte[] keyBytes = Base64.getDecoder().decode(Consts.JWT_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    private static String getTokenWithoutBearer(String token) {
+        if (token == null || token.isEmpty()) {
+            throw new IllegalArgumentException("Token cannot be null or empty");
+        }
+
+        if (token.startsWith("Bearer ")) {
+            String[] textSegments = token.split(" ");
+            if (textSegments.length < 2) {
+                throw new IllegalArgumentException("Malformed Bearer token");
+            }
+            return textSegments[1];
+        }
+        return token;
+    }
 }
