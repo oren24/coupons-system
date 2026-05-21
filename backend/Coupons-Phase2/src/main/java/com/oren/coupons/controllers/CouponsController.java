@@ -31,8 +31,13 @@ public class CouponsController {
 	}
 
 	@GetMapping
-	public List<Coupon> getAllCoupons() throws ApplicationException {
+	public List<Coupon> getAllCoupons(
+		@RequestParam(value = "limit", required = false, defaultValue = "0") int limit) throws ApplicationException {
 		List<Coupon> coupons = this.couponLogic.getAllCoupons();
+		// Optional limit to prevent loading too many records
+		if (limit > 0 && limit < coupons.size()) {
+			return coupons.subList(0, limit);
+		}
 		return coupons;
 	}
 
@@ -63,7 +68,7 @@ public class CouponsController {
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteUser(@PathVariable("id") int id) throws ApplicationException {
+	public void deleteCoupon(@PathVariable("id") int id) throws ApplicationException {
 		this.couponLogic.deleteCoupon(id);
 	}
 }

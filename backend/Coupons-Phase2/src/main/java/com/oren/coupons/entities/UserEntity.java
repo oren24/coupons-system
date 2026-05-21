@@ -30,13 +30,12 @@ public class UserEntity {
 
 	public UserEntity(User user) {
 		this.id = user.getId();
-
 		this.username = user.getUsername();
 		this.password = user.getPassword();
-		this.userType = UserType.CUSTOMER;
+		// Use the userType from the DTO, don't default to CUSTOMER
+		this.userType = user.getUserType() != null ? user.getUserType() : UserType.CUSTOMER;
 
 		if (user.getCompanyId() != null) {
-
 			this.company = new CompanyEntity();
 			this.company.setId(user.getCompanyId());
 		} else {
