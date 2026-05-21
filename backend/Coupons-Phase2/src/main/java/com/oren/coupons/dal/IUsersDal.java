@@ -61,7 +61,7 @@ public interface IUsersDal extends JpaRepository<UserEntity, Long> {
 	@Query("select (count(u) > 0) from UserEntity u where u.id = :id")
 	boolean isUserExists(@Param("id") Integer id);
 
-	@Query("select (count(u) > 0) from UserEntity u where u.username like :username")
+	@Query("select (count(u) > 0) from UserEntity u where u.username = :username")
 	boolean isUserExists(@Param("username") String username);
 
 	@Query("select (count(u)>0) from UserEntity u where u.id = :id and u.company.id = :companyId")

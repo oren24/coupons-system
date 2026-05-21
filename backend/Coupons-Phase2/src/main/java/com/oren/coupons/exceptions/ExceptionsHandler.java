@@ -6,16 +6,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-// Exception handler class
-// This class is used to handle exceptions that are thrown from the controllers.
-// The class is annotated with @RestControllerAdvice, which means that it is a controller that handles exceptions.
-// The class is annotated with @ExceptionHandler, which means that it is a handler of exceptions.
-// The class is annotated with @ResponseBody, which means that the returned object is the response, not a view name.
+/**
+ * Exception handler class
+ * This class is used to handle exceptions that are thrown from the controllers.
+ * The class is annotated with @RestControllerAdvice, which means that it is a controller that handles exceptions.
+ * The class is annotated with @ExceptionHandler, which means that it is a handler of exceptions.
+ * The class is annotated with @ResponseBody, which means that the returned object is the response, not a view name.
+ * 
+ * SECURITY FIX: Stack traces are no longer sent to clients (information disclosure prevention)
+ */
 @RestControllerAdvice
 public class ExceptionsHandler {
-	//	Response - Object in Spring
-	// Variable name is throwable in order to remember that it handles Exception and Error
-	// in order to
+	
 	@ExceptionHandler
 	@ResponseBody
 	public ErrorBean toResponse(Throwable throwable) {
@@ -23,7 +25,9 @@ public class ExceptionsHandler {
 		if (throwable instanceof ApplicationException) {
 			ApplicationException appException = (ApplicationException) throwable;
 
+			// SECURITY FIX: Log stack trace server-side only, don't send to client
 			if (appException.getErrorType().isShowStackTrace()) {
+				// Log to server logs (not to client response)
 				appException.printStackTrace();
 			}
 
@@ -35,12 +39,12 @@ public class ExceptionsHandler {
 			return errorBean;
 		}
 
+		// SECURITY FIX: Don't send raw exception messages to client
+		// Log server-side for debugging
 		throwable.printStackTrace();
 
-		String errorMessage = throwable.getMessage();
-		System.out.println(errorMessage);
-
-		ErrorBean errorBean = new ErrorBean(606, errorMessage);
+		// Return generic error message instead of exception details
+		ErrorBean errorBean = new ErrorBean(606, "An internal server error occurred. Please contact support if this persists.");
 
 		return errorBean;
 	}

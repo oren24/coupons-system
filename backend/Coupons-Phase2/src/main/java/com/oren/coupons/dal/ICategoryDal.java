@@ -18,13 +18,13 @@ public interface ICategoryDal extends CrudRepository<CategoryEntity, Integer> {
 	@Query("select c from CategoryEntity c")
 	List<Category> getAll();
 
-	@Query("select c from CategoryEntity c where c.name like :categoryName")
+	@Query("select c from CategoryEntity c where c.name = :categoryName")
 	Category getByName(@Param("categoryName") String categoryName);
 
 	@Query("select (count(c) > 0) from CategoryEntity c where c.id = :id")
 	boolean existById(@Param("id") Integer id);
 
-	@Query("select (count(c) > 0) from CategoryEntity c where c.name like :categoryName")
+	@Query("select (count(c) > 0) from CategoryEntity c where c.name = :categoryName")
 	boolean existByName(@Param("categoryName") String categoryName);
 
 

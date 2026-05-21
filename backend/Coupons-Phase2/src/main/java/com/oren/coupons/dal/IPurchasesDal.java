@@ -54,13 +54,13 @@ public interface IPurchasesDal extends CrudRepository<PurchaseEntity, Long> {
 	@Query("select p from PurchaseEntity p where p.coupon.category.id = :category")
 	List<PurchaseExtended> getPurchasesByCategory(@Param("category") String category) throws ApplicationException;
 
-	@Query("select p from PurchaseEntity p where p.coupon.name like :couponName")
+	@Query("select p from PurchaseEntity p where p.coupon.name = :couponName")
 	List<PurchaseExtended> getPurchasesByCoupon(@Param("couponName") String couponName);
 
-	@Query("select p from PurchaseEntity p where p.coupon.company.name like :name")
+	@Query("select p from PurchaseEntity p where p.coupon.company.name = :name")
 	List<PurchaseExtended> getPurchasesByCompany(@Param("name") String name);
 
-	@Query("select p from PurchaseEntity p where p.user.username like :username")
+	@Query("select p from PurchaseEntity p where p.user.username = :username")
 	List<PurchaseExtended> getPurchasesByUser(@Param("username") String username);
 
 	List<PurchaseExtended> findByCoupon_Company_NameLike(String name);

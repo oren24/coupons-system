@@ -14,11 +14,19 @@ import java.security.Key;
 import java.util.Date;
 
 public class JWTUtils {
-	public static Claims decodeJWTClaims(String jwt) {
+	
+	public static Claims decodeJWTClaims(String jwt) throws Exception {
 		//This line will throw an exception if it is not a signed JWS (as expected)
 		Claims claims = Jwts.parser()
 				.setSigningKey(DatatypeConverter.parseBase64Binary(Consts.JWT_KEY))
 				.parseClaimsJws(jwt).getBody();
+		
+		// SECURITY FIX: Validate token expiration
+		Date expirationDate = claims.getExpiration();
+		if (expirationDate != null && expirationDate.before(new Date())) {
+			throw new Exception("Token has expired");
+		}
+		
 		return claims;
 	}
 
@@ -35,7 +43,8 @@ public class JWTUtils {
 	public static String createJWT(SuccessfulLoginDetails successfulLoginDetails) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonLoginDetails = objectMapper.writeValueAsString(successfulLoginDetails);
-		return createJWT("0", successfulLoginDetails.getUserName(), jsonLoginDetails, 60000);
+		// SECURITY FIX: Use configurable expiration from properties instead of hardcoded value
+		return createJWT("0", successfulLoginDetails.getUserName(), jsonLoginDetails, Consts.JWT_EXPIRATION);
 	}
 
 	public static String createJWT(String subject) {

@@ -1,5 +1,6 @@
 package com.oren.coupons.filters;
 
+import com.oren.coupons.consts.Consts;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -8,30 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * This class is a filter that allows CORS requests.
+ * This class is a filter that allows CORS requests with security controls.
  * CORS is a security measure that prevents malicious websites from sending requests to your server.
+ * SECURITY FIX: Now uses environment-configurable allowed origins instead of hardcoded localhost
  */
 @Component
 public class CORSFilter implements Filter {
 
-
-	/**
-	 * Default constructor.
-	 * <p>
-	 * /
-	 * public CORSFilter() {
-	 * // TODO Auto-generated constructor stub
-	 * }
-	 * <p>
-	 * /**
-	 *
-	 * @see Filter#destroy()
-	 */
 	public void destroy() {
-
 		// TODO Auto-generated method stub
-
-
 	}
 
 	/**
@@ -41,26 +27,32 @@ public class CORSFilter implements Filter {
 			throws IOException, ServletException {
 
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
+		HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-		//Authorize (allow) all domains to consume the content (json) exposed by this server
-		((HttpServletResponse) servletResponse).addHeader(
-				"Access-Control-Allow-Credentials",
-				"true");
-		((HttpServletResponse) servletResponse).addHeader(
-				"Access-Control-Allow-Origin",
-				"http://localhost:3000");
-		((HttpServletResponse) servletResponse).addHeader(
-				"Access-Control-Allow-Methods",
-				"GET, OPTIONS, HEAD, PUT, POST, DELETE");
-		((HttpServletResponse) servletResponse).addHeader(
-				"Access-Control-Allow-Headers",
+		// SECURITY FIX: Get allowed origins from environment configuration
+		String allowedOrigins = Consts.CORS_ALLOWED_ORIGINS;
+		
+		// Get the origin from the request
+		String origin = request.getHeader("Origin");
+		
+		// Validate that origin matches allowed origins (simple check - can be enhanced with patterns)
+		if (origin != null && (allowedOrigins.contains(origin) || allowedOrigins.equals("*"))) {
+			response.addHeader("Access-Control-Allow-Origin", origin);
+		}
+
+		response.addHeader("Access-Control-Allow-Credentials", "true");
+		response.addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST, DELETE");
+		response.addHeader("Access-Control-Allow-Headers",
 				"Origin, Accept, x-auth-token, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization");
-
-		HttpServletResponse resp = (HttpServletResponse) servletResponse;
+		
+		// SECURITY FIX: Add security headers
+		response.addHeader("X-Content-Type-Options", "nosniff");
+		response.addHeader("X-Frame-Options", "DENY");
+		response.addHeader("X-XSS-Protection", "1; mode=block");
 
 		// For HTTP OPTIONS verb/method reply with ACCEPTED status code -- per CORS handshake
 		if (request.getMethod().equals("OPTIONS")) {
-			resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+			response.setStatus(HttpServletResponse.SC_ACCEPTED);
 			return;
 		}
 

@@ -54,17 +54,21 @@ public class UserLogic extends GeneralLogic {
 	}
 
 	public String login(String userName, String password) throws ApplicationException {
-		String hashedPassword = hashPassword(password);
-
-
-		if (!this.usersDal.userLogIn(userName, hashedPassword)) {
+		// SECURITY FIX: Changed password verification to use BCrypt comparison
+		// First get the user, then verify password with BCrypt
+		User user = this.usersDal.getUserByUsername(userName);
+		if (user == null) {
 			throw new ApplicationException(ErrorType.USER_NOT_FOUND, "user name and password does not match or exist");
 		}
+		
+		// Verify password using BCrypt (not exact match)
+		if (!HashFunction.verifyPassword(password, user.getPassword())) {
+			throw new ApplicationException(ErrorType.USER_NOT_FOUND, "user name and password does not match or exist");
+		}
+		
 		try {
-			String token = generateToken(userName, hashedPassword);
-
+			String token = generateToken(userName, user.getPassword());
 			return token;
-
 		} catch (Exception e) {
 			throw new ApplicationException(ErrorType.GENERAL_ERROR, "Could not create token", e);
 		}

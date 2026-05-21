@@ -1,34 +1,35 @@
 package com.oren.coupons.encryptions;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+/**
+ * SECURITY FIX: Replaced SHA-256 with BCrypt for password hashing.
+ * BCrypt automatically handles salt generation and is resistant to rainbow table attacks.
+ */
 public class HashFunction {
 
+	private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
 	/**
-	 * Hashes a password using the SHA-256 algorithm.
+	 * Hashes a password using BCrypt algorithm with automatic salt generation.
+	 * Each call produces a different hash due to random salt, so always use matches() for verification.
 	 *
-	 * @param password The password to hash.
-	 * @return The hashed password.
-	 * @throws NoSuchAlgorithmException If the SHA-256 algorithm is not available.
+	 * @param password The password to hash
+	 * @return The hashed password (includes salt)
 	 */
-	public static String hash(String password) throws NoSuchAlgorithmException {
+	public static String hash(String password) {
+		return encoder.encode(password);
+	}
 
-		// Get a MessageDigest instance for the SHA-256 algorithm.
-		MessageDigest md = MessageDigest.getInstance("SHA-256");
-
-		// Convert the password to bytes using the UTF-8 charset.
-		byte[] bytes = password.getBytes(StandardCharsets.UTF_8);
-
-		// Compute the hash of the password.
-		byte[] hash = md.digest(bytes);
-
-		// Convert the hash to a string.
-		StringBuilder sb = new StringBuilder();
-		for (byte b : hash) {
-			sb.append(String.format("%02x", b));
-		}
-		return sb.toString();
+	/**
+	 * Verifies if a plain text password matches a previously hashed password.
+	 * This is the secure way to validate passwords after hashing.
+	 *
+	 * @param plainPassword The plain text password to check
+	 * @param hashedPassword The previously hashed password from database
+	 * @return true if passwords match, false otherwise
+	 */
+	public static boolean verifyPassword(String plainPassword, String hashedPassword) {
+		return encoder.matches(plainPassword, hashedPassword);
 	}
 }
