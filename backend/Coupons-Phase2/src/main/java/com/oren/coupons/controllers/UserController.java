@@ -5,11 +5,13 @@ import com.oren.coupons.dto.User;
 import com.oren.coupons.exceptions.ApplicationException;
 import com.oren.coupons.logic.UserLogic;
 import com.oren.coupons.services.TokenBlacklistService;
+import com.oren.coupons.services.RateLimitService;
 import com.oren.coupons.consts.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +22,13 @@ public class UserController {
 
 	private final UserLogic userLogic;
 	private final TokenBlacklistService tokenBlacklistService;
+	private final RateLimitService rateLimitService;
 
 	@Autowired
-	public UserController(UserLogic userLogic, TokenBlacklistService tokenBlacklistService) {
+	public UserController(UserLogic userLogic, TokenBlacklistService tokenBlacklistService, RateLimitService rateLimitService) {
 		this.userLogic = userLogic;
 		this.tokenBlacklistService = tokenBlacklistService;
+		this.rateLimitService = rateLimitService;
 	}
 
 	@PostMapping()
@@ -55,7 +59,16 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) throws ApplicationException {
+	public ResponseEntity<Map<String, Object>> login(HttpServletRequest request, @RequestBody User user) throws ApplicationException {
+		// Rate limiting: max 5 login attempts per minute per IP
+		String ipAddress = request.getRemoteAddr();
+		if (rateLimitService.isRateLimited(ipAddress)) {
+			Map<String, Object> response = new HashMap<>();
+			response.put("success", false);
+			response.put("message", "Too many login attempts. Please try again later.");
+			return ResponseEntity.status(429).body(response);
+		}
+		
 		String token = userLogic.login(user.getUsername(), user.getPassword());
 		
 		Map<String, Object> response = new HashMap<>();

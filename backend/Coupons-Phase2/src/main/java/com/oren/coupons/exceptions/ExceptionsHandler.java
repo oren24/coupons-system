@@ -2,84 +2,66 @@ package com.oren.coupons.exceptions;
 
 import com.oren.coupons.beans.ErrorBean;
 import com.oren.coupons.enums.ErrorType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
- * Exception handler class
- * This class is used to handle exceptions that are thrown from the controllers.
- * The class is annotated with @RestControllerAdvice, which means that it is a controller that handles exceptions.
- * The class is annotated with @ExceptionHandler, which means that it is a handler of exceptions.
- * The class is annotated with @ResponseBody, which means that the returned object is the response, not a view name.
- * 
- * SECURITY FIX: Stack traces are no longer sent to clients (information disclosure prevention)
+ * Exception handler with proper HTTP status codes.
  */
 @RestControllerAdvice
 public class ExceptionsHandler {
 	
+	private static final Logger logger = LoggerFactory.getLogger(ExceptionsHandler.class);
+	
 	@ExceptionHandler
 	@ResponseBody
-	public ErrorBean toResponse(Throwable throwable) {
+	public ResponseEntity<ErrorBean> toResponse(HttpServletResponse response, Throwable throwable) {
+		int httpStatus = 500;
+		int errorCode = 606;
+		String errorMessage = "An internal server error occurred";
 
 		if (throwable instanceof ApplicationException) {
 			ApplicationException appException = (ApplicationException) throwable;
-
-			// SECURITY FIX: Log stack trace server-side only, don't send to client
-			if (appException.getErrorType().isShowStackTrace()) {
-				// Log to server logs (not to client response)
-				appException.printStackTrace();
-			}
-
 			ErrorType errorType = appException.getErrorType();
-			int errorNumber = errorType.getErrorNumber();
-			String errorMessage = errorType.getErrorMessage();
-			ErrorBean errorBean = new ErrorBean(errorNumber, errorMessage);
-
-			return errorBean;
+			errorCode = errorType.getErrorNumber();
+			errorMessage = errorType.getErrorMessage();
+			
+			// Map error codes to HTTP status
+			httpStatus = mapErrorCodeToHttpStatus(errorCode);
+			
+			// Log server-side only
+			if (errorType.isShowStackTrace()) {
+				logger.error("Application error: {}", errorMessage, appException);
+			} else {
+				logger.warn("Application error: {}", errorMessage);
+			}
+		} else {
+			// Log unexpected errors
+			logger.error("Unexpected error: {}", throwable.getMessage(), throwable);
 		}
 
-		// SECURITY FIX: Don't send raw exception messages to client
-		// Log server-side for debugging
-		throwable.printStackTrace();
-
-		// Return generic error message instead of exception details
-		ErrorBean errorBean = new ErrorBean(606, "An internal server error occurred. Please contact support if this persists.");
-
-		return errorBean;
+		response.setStatus(httpStatus);
+		ErrorBean errorBean = new ErrorBean(errorCode, errorMessage);
+		return new ResponseEntity<>(errorBean, HttpStatus.valueOf(httpStatus));
 	}
 
+	private int mapErrorCodeToHttpStatus(int errorCode) {
+		// Map application error codes to HTTP status codes
+		switch (errorCode) {
+			case 601: return 400; // Bad Request
+			case 602: return 401; // Unauthorized
+			case 603: return 403; // Forbidden
+			case 604: return 404; // Not Found
+			case 605: return 409; // Conflict
+			case 606: return 500; // Internal Server Error
+			default: return 500;
+		}
+	}
 }
-
-
-//	@ExceptionHandler(ApplicationException.class)
-//	public ErrorBean applicationExceptionHandler(HttpServletResponse response, ApplicationException applicationExction) {
-//
-//		ErrorType errorType = applicationExction.getErrorType();
-//		int errorNumber = errorType.getErrorNumber();
-//		String errorMessage = errorType.getErrorMessage();
-//		String errorName = errorType.getErrorName();
-//
-//		ErrorBean errorBean = new ErrorBean(errorNumber, errorMessage, errorName);
-//		response.setStatus(errorNumber);
-//
-//		//		check is critical - parameter in exceptions that we created
-//		if(applicationExction.getErrorType().isShowStackTrace()) {
-//			applicationExction.printStackTrace();
-//		}
-//
-//		return errorBean;
-//	}
-//
-//	@ExceptionHandler(Exception.class)
-//	public ErrorBean ExceptionHandler(HttpServletResponse response, Exception exception) {
-//
-//		int errorNumber = 601;
-//		String errorMessage = exception.getMessage();
-//
-//		ErrorBean errorBean = new ErrorBean(errorNumber, errorMessage, "GENERAL ERROR");
-//		response.setStatus(errorNumber);
-//		exception.printStackTrace();
-//
-//		return errorBean;
-//	}

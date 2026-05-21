@@ -2,11 +2,21 @@ package com.oren.coupons.dto;
 
 import com.oren.coupons.entities.UserEntity;
 import com.oren.coupons.enums.UserType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 public class User {
 	private Integer id;
+	
+	@NotBlank(message = "Username is required")
+	@Email(message = "Username must be a valid email")
 	private String username;
+	
+	@NotBlank(message = "Password is required")
+	@Size(min = 6, message = "Password must be at least 6 characters")
 	private String password;
+	
 	private UserType userType;
 	private Integer companyId;
 
