@@ -1,9 +1,9 @@
 package com.oren.coupons.services;
 
 import com.oren.coupons.beans.SuccessfulLoginDetails;
+import com.oren.coupons.enums.ErrorType;
 import com.oren.coupons.enums.UserType;
 import com.oren.coupons.exceptions.ApplicationException;
-import com.oren.coupons.exceptions.ErrorType;
 import com.oren.coupons.logic.CompanyLogic;
 import com.oren.coupons.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class AuthorizationService {
 			SuccessfulLoginDetails userDetails = JWTUtils.decodeJWT(token);
 			return userDetails.getUserType() == UserType.ADMIN;
 		} catch (Exception e) {
-			throw new ApplicationException(ErrorType.UNAUTHORIZED_ACCESS, "Invalid token");
+			throw new ApplicationException(ErrorType.UNAUTHORIZED, "Invalid token");
 		}
 	}
 
@@ -40,7 +40,7 @@ public class AuthorizationService {
 			return userDetails.getUserType() == UserType.COMPANY && 
 				   userDetails.getCompanyId() == companyId;
 		} catch (Exception e) {
-			throw new ApplicationException(ErrorType.UNAUTHORIZED_ACCESS, "Invalid token");
+			throw new ApplicationException(ErrorType.UNAUTHORIZED, "Invalid token");
 		}
 	}
 
@@ -56,7 +56,7 @@ public class AuthorizationService {
 			return userDetails.getUserType() == UserType.COMPANY && 
 				   userDetails.getCompanyId() == companyId;
 		} catch (Exception e) {
-			throw new ApplicationException(ErrorType.UNAUTHORIZED_ACCESS, "Invalid token");
+			throw new ApplicationException(ErrorType.UNAUTHORIZED, "Invalid token");
 		}
 	}
 
@@ -67,7 +67,7 @@ public class AuthorizationService {
 		try {
 			return JWTUtils.decodeJWT(token);
 		} catch (Exception e) {
-			throw new ApplicationException(ErrorType.UNAUTHORIZED_ACCESS, "Invalid token");
+			throw new ApplicationException(ErrorType.UNAUTHORIZED, "Invalid token");
 		}
 	}
 }
