@@ -35,6 +35,12 @@ public class UserLogic extends GeneralLogic {
 	}
 
 	public void addUser(User user) throws ApplicationException {
+		// Check if user already exists to provide a clear error message
+		User existingUser = this.usersDal.getUserByUsername(user.getUsername());
+		if (existingUser != null) {
+			throw new ApplicationException(ErrorType.USER_ALREADY_EXIST, "User with email '" + user.getUsername() + "' already exists");
+		}
+
 		// in order to not get the user type from the client
 		// sets the default user type to customer - ADMIN can change it later
 		user.setUserType(UserType.CUSTOMER);
@@ -45,11 +51,9 @@ public class UserLogic extends GeneralLogic {
 		UserEntity userEntity = new UserEntity(user);
 		StatisticsUtils.sendStatistics("User registration, user: " + user.getUsername());
 		try {
-
-
 			this.usersDal.save(userEntity);
 		} catch (Exception e) {
-			throw new ApplicationException(ErrorType.USER_ALREADY_EXIST, "Failed to add user - user already exist", e);
+			throw new ApplicationException(ErrorType.GENERAL_ERROR, "Failed to add user: " + e.getMessage(), e);
 		}
 	}
 
