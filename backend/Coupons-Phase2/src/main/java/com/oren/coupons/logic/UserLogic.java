@@ -45,6 +45,9 @@ public class UserLogic extends GeneralLogic {
 		// sets the default user type to customer - ADMIN can change it later
 		user.setUserType(UserType.CUSTOMER);
 
+		// Ensure company ID is null for new customers (no company assignment on registration)
+		user.setCompanyId(null);
+
 		validateUser(user);
 		String password = hashPassword(user.getPassword());
 		user.setPassword(password);

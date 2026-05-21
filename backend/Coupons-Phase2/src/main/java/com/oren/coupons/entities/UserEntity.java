@@ -48,8 +48,13 @@ public class UserEntity {
 		this.username = username;
 		this.password = password;
 		this.userType = userType;
-		this.company = new CompanyEntity();
-		this.company.setId(companyId);
+
+		if (companyId != null && companyId > 0) {
+			this.company = new CompanyEntity();
+			this.company.setId(companyId);
+		} else {
+			this.company = null;
+		}
 	}
 
 	public Integer getId() {
