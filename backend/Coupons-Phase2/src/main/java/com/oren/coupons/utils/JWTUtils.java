@@ -88,14 +88,20 @@ public class JWTUtils {
 		- the validateToken method.
 		- the decodeJWT method.
 		- in the createJWT method.
+	 Handles null and malformed tokens gracefully.
 	   */
 	private static String getTokenWithoutBearer(String token) {
+		if (token == null || token.isEmpty()) {
+			throw new IllegalArgumentException("Token cannot be null or empty");
+		}
+		
 		if (token.startsWith("Bearer ")) {
 			String[] textSegments = token.split(" ");
-			String tokenWithoutBearer = textSegments[1];
-			return tokenWithoutBearer;
+			if (textSegments.length < 2) {
+				throw new IllegalArgumentException("Malformed Bearer token");
+			}
+			return textSegments[1];
 		}
 		return token;
-
 	}
 }

@@ -1,6 +1,8 @@
 package com.oren.coupons.filters;
 
+import com.oren.coupons.services.TokenBlacklistService;
 import com.oren.coupons.utils.JWTUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -10,6 +12,9 @@ import java.io.IOException;
 
 @Component
 public class LoginFilter implements Filter {
+	
+	@Autowired(required = false)
+	private TokenBlacklistService tokenBlacklistService;
 	/**
 	 * checks if the request is white listed
 	 *
@@ -86,8 +91,27 @@ public class LoginFilter implements Filter {
 			filterChain.doFilter(myRequest, myResponse);
 			return;
 		}
+		
 		String token = myRequest.getHeader("Authorization");
 		try {
+			// Check if token is null or empty
+			if (token == null || token.isEmpty()) {
+				myResponse.setStatus(401);
+				return;
+			}
+			
+			// Check if token is blacklisted (logged out)
+			String tokenWithoutBearer = token;
+			if (token.startsWith("Bearer ")) {
+				tokenWithoutBearer = token.substring(7);
+			}
+			
+			if (tokenBlacklistService != null && tokenBlacklistService.isBlacklisted(tokenWithoutBearer)) {
+				myResponse.setStatus(401);
+				myResponse.getWriter().write("{\"error\": \"Token has been revoked\"}");
+				return;
+			}
+			
 			JWTUtils.validateToken(token);
 			filterChain.doFilter(myRequest, myResponse);
 		} catch (Exception e) {

@@ -4,20 +4,27 @@ package com.oren.coupons.controllers;
 import com.oren.coupons.dto.User;
 import com.oren.coupons.exceptions.ApplicationException;
 import com.oren.coupons.logic.UserLogic;
+import com.oren.coupons.services.TokenBlacklistService;
+import com.oren.coupons.consts.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
 	private final UserLogic userLogic;
+	private final TokenBlacklistService tokenBlacklistService;
 
 	@Autowired
-	public UserController(UserLogic userLogic) {
+	public UserController(UserLogic userLogic, TokenBlacklistService tokenBlacklistService) {
 		this.userLogic = userLogic;
+		this.tokenBlacklistService = tokenBlacklistService;
 	}
 
 	@PostMapping()
@@ -48,12 +55,40 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public String login(@RequestBody User user) throws ApplicationException {
-
-
+	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) throws ApplicationException {
 		String token = userLogic.login(user.getUsername(), user.getPassword());
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("success", true);
+		response.put("token", token);
+		response.put("user", user);
+		
+		return ResponseEntity.ok(response);
+	}
 
-
-		return token;
+	@PostMapping("/logout")
+	public ResponseEntity<Map<String, String>> logout(@RequestHeader("Authorization") String token) {
+		try {
+			// Remove "Bearer " prefix if present
+			String tokenWithoutBearer = token;
+			if (token != null && token.startsWith("Bearer ")) {
+				tokenWithoutBearer = token.substring(7);
+			}
+			
+			// Add token to blacklist with configured expiration time
+			tokenBlacklistService.addToBlacklist(tokenWithoutBearer, Consts.JWT_EXPIRATION);
+			
+			Map<String, String> response = new HashMap<>();
+			response.put("success", "true");
+			response.put("message", "Logged out successfully");
+			
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			Map<String, String> response = new HashMap<>();
+			response.put("success", "false");
+			response.put("message", "Logout failed: " + e.getMessage());
+			
+			return ResponseEntity.status(400).body(response);
+		}
 	}
 }
