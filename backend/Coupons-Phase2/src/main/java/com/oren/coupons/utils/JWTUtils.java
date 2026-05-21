@@ -55,7 +55,15 @@ public class JWTUtils {
     }
 
     private static SecretKey getSigningKey() {
-        byte[] keyBytes = Base64.getDecoder().decode(Consts.JWT_KEY);
+        // Handle both plain text and base64-encoded secrets
+        byte[] keyBytes;
+        try {
+            // Try to decode as base64 first
+            keyBytes = Base64.getDecoder().decode(Consts.JWT_KEY);
+        } catch (IllegalArgumentException e) {
+            // If base64 decode fails, treat as plain text and encode it
+            keyBytes = Consts.JWT_KEY.getBytes(StandardCharsets.UTF_8);
+        }
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
